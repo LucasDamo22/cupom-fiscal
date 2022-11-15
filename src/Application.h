@@ -14,8 +14,9 @@ public:
 private:
     EmpresaController *empresaController;
     Empresa *empresa;
-    Produtos *prods;
+    Produtos *produtos;
     Compras *compras;
+    Descontos *descontos;
     std::string cupomFiscal;
 };
 

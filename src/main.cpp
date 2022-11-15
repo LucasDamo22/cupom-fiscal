@@ -3,6 +3,7 @@
 #include "Empresa.h"
 #include "EmpresaService.h"
 #include "EmpresaController.h"
+#include "Descontos.h"
 #include "Produtos.h"
 #include "Compras.h"
 #include "Application.h"
