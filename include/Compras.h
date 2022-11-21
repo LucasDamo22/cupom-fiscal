@@ -14,12 +14,9 @@ public:
     Compras(std::string filename);
     ~Compras();
     std::string toString();
-    
-
-
-
-
-
+    std::string getIdCompra(int i);
+    std::string getQtdCompra(int i);
+    int getSize();
 };
 
 

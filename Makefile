@@ -1,22 +1,24 @@
-CXX		  := g++
-CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb
+OUTPUTDIR :=./bin
+SOURCEDIR :=./src
+HEADERDIR :=./include
+PROGRAM_NAME = main
 
-SRC		:= src
-INCLUDE	:= include
-LIB		:= lib
+CXXFLAGS  +=-Iinclude
 
-LIBRARIES	:=
-EXECUTABLE	:= main
+#link with other libraries
+LD_FLAGS :=-lm
 
+#source files for the platform
+SOURCE_FILES := $(wildcard $(SOURCEDIR)/*.cpp)
 
-all: $(EXECUTABLE)
+# include headers in the dependecy check
+HEADER_FILES := $(wildcard $(HEADERDIR)/*.h)
 
-run: clean all
-	clear
-	./$(BIN)/$(EXECUTABLE)
+#compiler an instance of the simulator
+$(OUTPUTDIR)/$(PROGRAM_NAME): $(SOURCE_FILES) $(HEADER_FILES)
+	g++ $(SOURCE_FILES) -o $(OUTPUTDIR)/$(PROGRAM_NAME) $(LD_FLAGS) $(CXXFLAGS)
 
-$(EXECUTABLE): $(SRC)/*.cpp
-	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)
-
+#remove previously generated files
 clean:
-	-rm $(EXECUTABLE)
+	$(Q)rm -rf $(OUTPUTDIR)/$(PROGRAM_NAME)
+

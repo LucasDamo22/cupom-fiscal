@@ -25,17 +25,19 @@ Empresa* EmpresaService::get(){
     std::string line, word;
 
     std::vector<std::string> fields;
-    std::vector<std::vector<std::string>> content;
+    std::vector<std::vector<std::string>> enderecoDiv;//lista com os campos do endereço
+    std::vector<std::vector<std::string>> empresaDados;
     
 
     std::ifstream filein;
     filein.open("./data/empresa.csv");
 
-    std::string nome;
-    std::string cnpj;
-    std::string ie;
-    std::string telefone;
-    std::string endereco;
+    
+    
+
+    
+    std::stringstream enderecoAux;//auxiliar para separar os campos do endereço
+
     while (getline(filein, line))
     {
         fields.clear();
@@ -44,13 +46,35 @@ Empresa* EmpresaService::get(){
 
         while (getline(str, word, ';'))
             fields.push_back(word);
-        content.push_back(fields);
+        empresaDados.push_back(fields);
     }
-        nome = content[0][0];
-        cnpj = content[0][1];
-        ie =   content[0][2];
-        endereco = content[0][3];
-        telefone = content[0][4];
+        std::string nome = empresaDados[0][0];
+        std::string cnpj = empresaDados[0][1];
+        std::string ie =   empresaDados[0][2];
+        enderecoAux << empresaDados[0][3];
+        std::string telefone = empresaDados[0][4];
+        
+        std::string aux;
+    while (getline(enderecoAux,aux))
+    {
+        fields.clear();
+
+        std::stringstream str(aux);
+
+        while(getline(str,word,':')){
+            fields.push_back(word);}
+            enderecoDiv.push_back(fields);
+    }
+    std::string rua = enderecoDiv[0][0];//campos do endereço
+    std::string numero = enderecoDiv[0][1];
+    std::string bairro = enderecoDiv[0][2];
+    std::string cidade = enderecoDiv[0][3];
+    std::string estado = enderecoDiv[0][4];
+    std::string cep = enderecoDiv[0][5];
+
+    std::string endereco = rua + ", " + numero + " - " + bairro + " - " + cidade + "-" + estado + " CEP " + cep;
+   
+    
 
     
 

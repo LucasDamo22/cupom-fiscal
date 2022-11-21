@@ -9,8 +9,9 @@ public:
     Application();
     ~Application();
     void init();
-    std::string criaCupom();
+    std::string criaCabecalho();
     std::string getNCupom();
+    std::string criaListaCompras();
 private:
     EmpresaController *empresaController;
     Empresa *empresa;

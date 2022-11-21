@@ -34,3 +34,25 @@ for(int i =0;i<produtos.size();i++){
     }
     return ss.str();
 }
+
+std::string Produtos::getCodBarras(int i){
+return produtos[i][0];
+}
+std::string Produtos::getDescricao(int i){
+return produtos[i][1];
+}
+std::string Produtos::getTipodeVenda(int i){
+return produtos[i][2];
+}
+std::string Produtos::getTipoMedida(int i){
+return produtos[i][3];   
+}
+float Produtos::getQtdOuMedida(int i){
+return std::stof(produtos[i][4]);
+}
+float Produtos::getPreco(int i){
+return std::stof(produtos[i][5]);
+}
+int Produtos::getSize(){
+    return produtos.size();
+}
