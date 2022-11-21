@@ -47,8 +47,8 @@ return produtos[i][2];
 std::string Produtos::getTipoMedida(int i){
 return produtos[i][3];   
 }
-float Produtos::getQtdOuMedida(int i){
-return std::stof(produtos[i][4]);
+std::string Produtos::getQtdOuMedida(int i){
+return produtos[i][4];
 }
 float Produtos::getPreco(int i){
 return std::stof(produtos[i][5]);

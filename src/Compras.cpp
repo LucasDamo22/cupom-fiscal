@@ -35,8 +35,8 @@ std::string Compras::toString(){
 std::string Compras::getIdCompra(int i){
     return compras[i][0];
 }
-std::string Compras::getQtdCompra(int i){
-    return compras[i][1];
+float Compras::getQtdCompra(int i){
+    return stof(compras[i][1]);
 }
 int Compras::getSize(){
     return compras.size();

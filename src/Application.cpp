@@ -62,18 +62,27 @@ std::string Application::criaListaCompras()
     // aux = this->compras->getQtdCompra(0);
     for (int j = 0; j < produtos->getSize(); j++)
     {
-        int qtdItems = 0;
+        float qtdItems = 0;
+        std::string tipoDeVenda;
+        
+        if(produtos->getTipodeVenda(j)=="unidade")
+            tipoDeVenda = "UN";
+        if(produtos->getTipodeVenda(j)=="granel")
+            tipoDeVenda = "KG";
+        
         for (int i = 0; i < compras->getSize(); i++)
         {
 
             if (compras->getIdCompra(i) == produtos->getCodBarras(j))
             {
-                qtdItems++;
+                qtdItems+=compras->getQtdCompra(i);
+                
             }
         }
+        if(qtdItems>0){
         ss << produtos->getDescricao(j) << "   " << produtos->getPreco(j)<< "   ";
-        ss << qtdItems<<std::endl;
+        ss << qtdItems<<"   "<< tipoDeVenda<<std::endl;
+        }
     }
-
     return ss.str();
 }

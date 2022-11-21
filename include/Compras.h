@@ -15,7 +15,7 @@ public:
     ~Compras();
     std::string toString();
     std::string getIdCompra(int i);
-    std::string getQtdCompra(int i);
+    float getQtdCompra(int i);
     int getSize();
 };
 

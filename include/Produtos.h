@@ -16,7 +16,7 @@ class Produtos{
     std::string getDescricao(int i);
     std::string getTipodeVenda(int i);
     std::string getTipoMedida(int i);
-    float getQtdOuMedida(int i);
+    std::string getQtdOuMedida(int i);
     float getPreco(int i);
     int getSize();
     
