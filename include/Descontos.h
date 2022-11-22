@@ -12,6 +12,7 @@ class Descontos{
     Descontos(std::string filename);
     ~Descontos();
     std::string toString();
+    int verificaDesconto(std::string id);
 };
 
 #endif

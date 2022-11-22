@@ -57,31 +57,32 @@ std::string Application::criaCabecalho()
 std::string Application::criaListaCompras()
 {
     std::stringstream ss;
-    //int indextemp;
-    // aux = this->compras->getIdCompra(0);
-    // aux = this->compras->getQtdCompra(0);
+    // int indextemp;
+    //  aux = this->compras->getIdCompra(0);
+    //  aux = this->compras->getQtdCompra(0);
     for (int j = 0; j < produtos->getSize(); j++)
     {
         float qtdItems = 0;
         std::string tipoDeVenda;
-        
-        if(produtos->getTipodeVenda(j)=="unidade")
+        std::string desconto = "  n tem desc";
+        if (produtos->getTipodeVenda(j) == "unidade")
             tipoDeVenda = "UN";
-        if(produtos->getTipodeVenda(j)=="granel")
+        if (produtos->getTipodeVenda(j) == "granel")
             tipoDeVenda = "KG";
-        
+
         for (int i = 0; i < compras->getSize(); i++)
         {
 
             if (compras->getIdCompra(i) == produtos->getCodBarras(j))
             {
-                qtdItems+=compras->getQtdCompra(i);
-                
+                qtdItems += compras->getQtdCompra(i);
             }
         }
-        if(qtdItems>0){
-        ss << produtos->getDescricao(j) << "   " << produtos->getPreco(j)<< "   ";
-        ss << qtdItems<<"   "<< tipoDeVenda<<std::endl;
+
+        if (qtdItems > 0)
+        {
+            ss << produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
+            ss << qtdItems << "   " << tipoDeVenda << std::endl;
         }
     }
     return ss.str();

@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include <fstream>
+#include <iostream>
 
 #include "Descontos.h"
 #include <string>
@@ -31,4 +32,18 @@ for(int i =0;i<descontos.size();i++){
     }
     return ss.str();
 
+}
+int Descontos::verificaDesconto(std::string id){
+    
+    for(int i = 0;i<descontos.size();i++){
+        for( int j = 0;j<6;j++){
+
+        
+        if(id==descontos[i][j]){
+            
+            return 1;
+        }
+        }
+    }
+    return 0;
 }
