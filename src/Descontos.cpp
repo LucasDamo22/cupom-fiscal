@@ -33,17 +33,30 @@ for(int i =0;i<descontos.size();i++){
     return ss.str();
 
 }
-int Descontos::verificaDesconto(std::string id){
-    
+std::string Descontos::verificaDesconto(std::string id){
+    std::string a = "   n tem";
     for(int i = 0;i<descontos.size();i++){
-        for( int j = 0;j<6;j++){
-
-        
-        if(id==descontos[i][j]){
-            
-            return 1;
-        }
+        if(id==descontos[i][0]){
+            a = "  tem";
         }
     }
-    return 0;
+   return a;
+}
+
+std::string Descontos::getCodbarras(int i){
+    return descontos[i][0];
+}
+
+int Descontos::getSize(){
+    return descontos.size();
+}
+
+bool Descontos::verificaDesc(std::string id){
+    bool a = false;
+    for(int i = 0;i<descontos.size();i++){
+        if(id==descontos[i][0]){
+            a = true;
+        }
+    }
+   return a;
 }

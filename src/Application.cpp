@@ -60,11 +60,16 @@ std::string Application::criaListaCompras()
     // int indextemp;
     //  aux = this->compras->getIdCompra(0);
     //  aux = this->compras->getQtdCompra(0);
-    for (int j = 0; j < produtos->getSize(); j++)
-    {
-        float qtdItems = 0;
+    //std::string aux = descontos->getCodbarras(0);
+    //std::cout<<aux<<std::endl;
+        float qtdItems;
         std::string tipoDeVenda;
         std::string desconto = "  n tem desc";
+        bool desc;
+    
+    for (int j = 0; j < produtos->getSize(); j++)
+    {
+        qtdItems=0;
         if (produtos->getTipodeVenda(j) == "unidade")
             tipoDeVenda = "UN";
         if (produtos->getTipodeVenda(j) == "granel")
@@ -77,12 +82,15 @@ std::string Application::criaListaCompras()
             {
                 qtdItems += compras->getQtdCompra(i);
             }
+            
         }
-
+        
+        //desconto = descontos->verificaDesconto(produtos->getCodBarras(j));
+        desc = descontos->verificaDesc(produtos->getCodBarras(j));
         if (qtdItems > 0)
         {
             ss << produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
-            ss << qtdItems << "   " << tipoDeVenda << std::endl;
+            ss << qtdItems << "   " << tipoDeVenda << "   "<<desc<< std::endl;
         }
     }
     return ss.str();
