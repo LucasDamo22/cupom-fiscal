@@ -13,5 +13,5 @@ int main() {
     app->init();
     //std::cout<<"main"<<std::endl;
     cout<<app->criaListaCompras();
-    cout<<app->getNumFiscal();
+    
 }

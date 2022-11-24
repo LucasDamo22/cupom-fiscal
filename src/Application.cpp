@@ -198,6 +198,7 @@ std::string Application::criaCabecalho()
 std::string Application::criaListaCompras()
 {
     std::stringstream ss;
+    std::string separador = "--------------------------------------------------------------------------------";
     // int indextemp;
     //  aux = this->compras->getIdCompra(0);
     //  aux = this->compras->getQtdCompra(0);
@@ -206,7 +207,7 @@ std::string Application::criaListaCompras()
     float qtdItems;
     float valorItems;
 
-    float valorTotal;
+    float valorTotal=0;
     std::string tipoDeVenda;
     std::string desconto = "  n tem desc";
     int desc;
@@ -275,16 +276,19 @@ std::string Application::criaListaCompras()
         {
 
         }
+        
         valorItems = (produtos->getPreco(j) * qtdItems) - valorDesc;
+        valorTotal +=valorItems;
         if (qtdItems > 0)
         {
-            
-            
-            
             
             ss << j+1<<" "<<produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
             ss << qtdItems << "   " << tipoDeVenda << "   " << valorDesc << "   " << valorItems << "   " << desc << std::endl;
         }
+            
     }
+
+    ss<<separador<<endl<<"TOTAL:  "<<valorTotal<<endl;
+    ss<<getNumFiscal();
     return ss.str();
 }
