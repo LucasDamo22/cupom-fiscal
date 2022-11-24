@@ -12,13 +12,14 @@ public:
     std::string criaCabecalho();
     std::string getNCupom();
     std::string criaListaCompras();
+    std::string getNumFiscal();
 private:
     EmpresaController *empresaController;
     Empresa *empresa;
     Produtos *produtos;
     Compras *compras;
     Descontos *descontos;
-    std::string cupomFiscal;
+    
 };
 
 #endif

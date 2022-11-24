@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <cmath>
 
 #include "Empresa.h"
@@ -35,6 +36,50 @@ void Application::init()
     criaCabecalho();
     //cout << descontos->getCodbarras(0);
     // cout << this->compras->toString();
+}
+std::string Application::getNumFiscal(){
+    
+    std::string filename = "./data/numcupom.csv";
+    std::string line, word;
+    vector<std::string> fields;
+    vector<vector<std::string>> cupom;
+    int num;
+    int serie;
+
+    std::ifstream filein;
+    filein.open(filename);
+
+    while (getline(filein, line))
+    {
+        fields.clear();
+
+        std::stringstream str(line);
+
+        while (getline(str, word, ';'))
+            fields.push_back(word);
+        cupom.push_back(fields);
+    }
+    filein.close();
+    
+    num=stoi(cupom[0][0]);
+    serie = stoi(cupom[0][1]);
+    if(num<999){
+        num++;
+    }else{
+        num=1;
+        serie++;
+    }
+
+    std::stringstream ss;
+    ss<<"NCF-e: "<<cupom[0][0] <<" - Série: "<<cupom[0][1];
+    std::stringstream aa;
+    ofstream fileout;
+    fileout.open(filename,ios::trunc);
+    aa<<to_string(num)+";"+to_string(serie);
+    fileout<<aa.str();
+    fileout.close();
+
+    return ss.str();
 }
 
 std::string Application::criaCabecalho()
@@ -108,7 +153,7 @@ std::string Application::criaListaCompras()
             valorDesc = (produtos->getPreco(j)*intpart);
         }
         if(desc == 3){
-            
+
         }
         valorItems = (produtos->getPreco(j)*qtdItems)-valorDesc;
         if (qtdItems > 0)
