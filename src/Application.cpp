@@ -76,8 +76,63 @@ std::string Application::getNumFiscal()
         serie++;
     }
 
+    time_t time_ptr;
+    time_ptr = time(NULL);
+    tm *tm_local = localtime(&time_ptr);
+    std::string dia;
+    if (tm_local->tm_mday >= 10)
+    {
+        dia = to_string(tm_local->tm_mday);
+    }
+    else
+    {
+        dia = '0' + to_string(tm_local->tm_mday);
+    }
+    std::string mes;
+    if (tm_local->tm_mon >= 10)
+    {
+        mes = to_string(tm_local->tm_mon + 1);
+    }
+    else
+    {
+        mes = '0' + to_string(tm_local->tm_mon + 1);
+    }
+    std::string hora;
+    if (tm_local->tm_hour >= 10)
+    {
+        hora = to_string(tm_local->tm_hour);
+    }
+    else
+    {
+        hora = '0' + to_string(tm_local->tm_hour);
+    }
+    std::string min;
+    if (tm_local->tm_min >= 10)
+    {
+        min = to_string(tm_local->tm_min);
+    }
+    else
+    {
+        min = '0' + to_string(tm_local->tm_min);
+    }
+    std::string sec;
+    if (tm_local->tm_sec >= 10)
+    {
+        sec = to_string(tm_local->tm_sec);
+    }
+    else
+    {
+        sec = '0' + to_string(tm_local->tm_sec);
+    }
+    std::string ano = to_string(tm_local->tm_year + 1900);
+
     std::stringstream ss;
-    ss << "NCF-e: " << cupom[0][0] << " - Série: " << cupom[0][1];
+    ss << "--------------------------------------------------------------------------------" << endl;
+    ss << "NCF-e: " << cupom[0][0] << " - Série: " << cupom[0][1] << "                         ";
+    ss << "Data: " << dia << '/' << mes << '/' << ano;
+    ss << " - Hora: " << hora << ':' << min << ':' << sec << endl;
+    ss << "--------------------------------------------------------------------------------" << endl;
+
     std::stringstream aa;
     ofstream fileout;
     fileout.open(filename, ios::trunc);
@@ -223,25 +278,11 @@ std::string Application::criaListaCompras()
         valorItems = (produtos->getPreco(j) * qtdItems) - valorDesc;
         if (qtdItems > 0)
         {
-            fields.push_back(to_string(j));                     //0
-            fields.push_back(produtos->getDescricao(j));        //1
-            fields.push_back("   ");                            
-            fields.push_back(to_string(produtos->getPreco(j))); //3
-            fields.push_back("   ");                           
-            fields.push_back(to_string(qtdItems));              //5
-            fields.push_back("   ");                            
-            fields.push_back(tipoDeVenda);                      //7
-            fields.push_back("   ");                            
-            fields.push_back(to_string(valorDesc));             //9
-            fields.push_back("   ");                            
-            fields.push_back(to_string(valorItems));            //11
-            fields.push_back("   ");                            
-            fields.push_back(to_string(desc));                  //13
-
-
-
-
-            ss << produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
+            
+            
+            
+            
+            ss << j+1<<" "<<produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
             ss << qtdItems << "   " << tipoDeVenda << "   " << valorDesc << "   " << valorItems << "   " << desc << std::endl;
         }
     }
