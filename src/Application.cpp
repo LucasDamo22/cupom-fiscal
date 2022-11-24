@@ -198,22 +198,25 @@ std::string Application::criaCabecalho()
 std::string Application::criaListaCompras()
 {
     std::stringstream ss;
-    std::string separador = "--------------------------------------------------------------------------------";
     // int indextemp;
     //  aux = this->compras->getIdCompra(0);
     //  aux = this->compras->getQtdCompra(0);
     // std::string aux = descontos->getCodbarras(0);
     // std::cout<<aux<<std::endl;
+    std::string separador = "--------------------------------------------------------------------------------";
     float qtdItems;
     float valorItems;
+    int pos = 1;
+    std::string posi;
+    std::string aux;
 
     float valorTotal=0;
     std::string tipoDeVenda;
     std::string desconto = "  n tem desc";
     int desc;
-    vector<string>descontos3;
-    vector<string>fields;
-    vector<vector<string>>comprasVet;
+    vector<string> descontos3;
+    vector<string> fields;
+    vector<vector<string>> comprasVet;
 
     for (int j = 0; j < produtos->getSize(); j++)
     {
@@ -242,7 +245,6 @@ std::string Application::criaListaCompras()
         if (produtos->getTipodeVenda(j) == "granel")
             tipoDeVenda = "KG";
 
-        
         for (int i = 0; i < compras->getSize(); i++)
         {
             if (compras->getIdCompra(i) == produtos->getCodBarras(j))
@@ -250,7 +252,7 @@ std::string Application::criaListaCompras()
                 qtdItems += compras->getQtdCompra(i);
             }
         }
-        
+
         desc = descontos->verificaQualDesc(produtos->getCodBarras(j));
 
         if (desc == 1)
@@ -269,26 +271,83 @@ std::string Application::criaListaCompras()
                 }
             }
             aux = aux / 4;
-            floatpart = modf(aux, &intpart); // função para separar parte inteira, da parte decimal
+            floatpart = modf(aux, &intpart); // funÃ§Ã£o para separar parte inteira, da parte decimal
             valorDesc = (produtos->getPreco(j) * intpart);
         }
         if (desc == 3)
         {
-
         }
-        
         valorItems = (produtos->getPreco(j) * qtdItems) - valorDesc;
         valorTotal +=valorItems;
         if (qtdItems > 0)
         {
-            
-            ss << j+1<<" "<<produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
-            ss << qtdItems << "   " << tipoDeVenda << "   " << valorDesc << "   " << valorItems << "   " << desc << std::endl;
-        }
-            
-    }
+            if (pos >= 10)
+            {
+                posi = to_string(pos);
+            }
+            else
+            {
+                posi = '0' + to_string(pos);
+            }
+            fields.push_back(to_string(j));              // 0
+            fields.push_back(produtos->getDescricao(j)); // 1
+            fields.push_back("   ");
+            fields.push_back(to_string(produtos->getPreco(j))); // 3
+            fields.push_back("   ");
+            fields.push_back(to_string(qtdItems)); // 5
+            fields.push_back("   ");
+            fields.push_back(tipoDeVenda); // 7
+            fields.push_back("   ");
+            fields.push_back(to_string(valorDesc)); // 9
+            fields.push_back("   ");
+            fields.push_back(to_string(valorItems)); // 11
+            fields.push_back("   ");
+            fields.push_back(to_string(desc)); // 13
+            ss.precision(4);
+            aux = posi + " " + produtos->getCodBarras(j) + " " + produtos->getDescricao(j);
+            ss << posi << " " << produtos->getCodBarras(j) << " " << produtos->getDescricao(j);
+            if (aux.size() >= 50)
+            {
 
-    ss<<separador<<endl<<"TOTAL:  "<<valorTotal<<endl;
-    ss<<getNumFiscal();
+                ss << endl
+                   << " ";
+
+                for (int i = to_string(produtos->getPreco(j)).size(); i < 57; i++)
+                {
+                    ss << " ";
+                }
+                if (valorDesc == 0)
+                {
+                    ss << produtos->getPreco(j) << " " << tipoDeVenda << "   " << qtdItems <<"            "<<valorItems<< endl;
+                }
+                else
+                {
+                    ss << produtos->getPreco(j) << " " << tipoDeVenda << "   " << qtdItems << " -" << (valorDesc) <<"            "<<valorItems<< endl;
+                }
+            }
+            else
+            {
+                for (int i = aux.size(); i < (58 - to_string(produtos->getPreco(j)).size()); i++)
+                {
+                    ss << " ";
+                }
+                if (valorDesc == 0)
+                {
+                    ss << produtos->getPreco(j) << " " << tipoDeVenda << "   " << qtdItems <<"            "<<valorItems<< endl;
+                }
+                else
+                {
+                    ss << produtos->getPreco(j) << " " << tipoDeVenda << "   " << qtdItems << " -" << (valorDesc) <<"            "<<valorItems<<endl;
+                }
+            }
+            pos++;
+        }
+    }
+    ss<<separador<<endl;
+    for (int i = 0; i < 50;  i++)
+                {
+                    ss << " ";
+                }
+    ss<<"TOTAL: "<<valorTotal<<endl<<getNumFiscal();
     return ss.str();
 }
