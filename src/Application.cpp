@@ -215,8 +215,7 @@ std::string Application::criaListaCompras()
     std::string desconto = "  n tem desc";
     int desc;
     vector<string> descontos3;
-    vector<string> fields;
-    vector<vector<string>> comprasVet;
+
 
     for (int j = 0; j < produtos->getSize(); j++)
     {
@@ -289,20 +288,7 @@ std::string Application::criaListaCompras()
             {
                 posi = '0' + to_string(pos);
             }
-            fields.push_back(to_string(j));              // 0
-            fields.push_back(produtos->getDescricao(j)); // 1
-            fields.push_back("   ");
-            fields.push_back(to_string(produtos->getPreco(j))); // 3
-            fields.push_back("   ");
-            fields.push_back(to_string(qtdItems)); // 5
-            fields.push_back("   ");
-            fields.push_back(tipoDeVenda); // 7
-            fields.push_back("   ");
-            fields.push_back(to_string(valorDesc)); // 9
-            fields.push_back("   ");
-            fields.push_back(to_string(valorItems)); // 11
-            fields.push_back("   ");
-            fields.push_back(to_string(desc)); // 13
+           
             ss.precision(4);
             aux = posi + " " + produtos->getCodBarras(j) + " " + produtos->getDescricao(j);
             ss << posi << " " << produtos->getCodBarras(j) << " " << produtos->getDescricao(j);
