@@ -217,7 +217,7 @@ std::string Application::criaListaCompras()
     vector<string> descontos3;
 
 
-    for (int j = 0; j < produtos->getSize(); j++)
+    /*for (int j = 0; j < produtos->getSize(); j++)
     {
         for (int i = 0; i < descontos->getSize(); i++)
         {
@@ -229,11 +229,8 @@ std::string Application::criaListaCompras()
                 descontos3.push_back(descontos->getCodbarrasB(i));
             }
         }
-    }
-    for (int i = 0; i < descontos3.size(); i++)
-    {
-        cout << descontos3[i] << endl;
-    }
+    }*/
+   
 
     for (int j = 0; j < produtos->getSize(); j++)
     {
@@ -288,8 +285,8 @@ std::string Application::criaListaCompras()
             {
                 posi = '0' + to_string(pos);
             }
-           
-            ss.precision(4);
+            ss.setf(std::ios::fixed);
+            ss.precision(2);
             aux = posi + " " + produtos->getCodBarras(j) + " " + produtos->getDescricao(j);
             ss << posi << " " << produtos->getCodBarras(j) << " " << produtos->getDescricao(j);
             if (aux.size() >= 50)
