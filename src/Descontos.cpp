@@ -53,6 +53,10 @@ std::string Descontos::getCodbarrasA(std::string id)
     }
     return 0;
 }
+std::string Descontos::getCodbarrasA(int i)
+{
+    return descontos[i][0];
+}
 float Descontos::getDescItemA(std::string id)
 {
     for (int i = 0; i < descontos.size(); i++)
@@ -96,6 +100,10 @@ std::string Descontos::getCodBarrasB(std::string id)
         }
     }
     return 0;
+}
+std::string Descontos::getCodbarrasB(int i)
+{
+    return descontos[i][4];
 }
 
 float Descontos::getDescItemB(std::string id)

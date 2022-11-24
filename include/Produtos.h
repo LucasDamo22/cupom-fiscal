@@ -7,7 +7,9 @@
 class Produtos{
     std::vector<std::string> fields;
     std::vector<std::vector<std::string>> produtos;
+    
     public:
+    std::vector<std::vector<std::string>> produtosCompra;
     Produtos(std::string filename);
     ~Produtos();
     std::string toString();

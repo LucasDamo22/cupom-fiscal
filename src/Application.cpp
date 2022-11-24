@@ -13,6 +13,8 @@
 
 #include "Application.h"
 
+#define tamanho 80
+
 Application::Application()
 {
     this->empresaController = new EmpresaController(new EmpresaService());
@@ -33,12 +35,13 @@ void Application::init()
     // cout << this->produtos->toString()<<endl;;
 
     // cout << this->descontos->toString();
-    criaCabecalho();
-    //cout << descontos->getCodbarras(0);
-    // cout << this->compras->toString();
+    cout<<criaCabecalho();
+    // cout << descontos->getCodbarras(0);
+    //  cout << this->compras->toString();
 }
-std::string Application::getNumFiscal(){
-    
+std::string Application::getNumFiscal()
+{
+
     std::string filename = "./data/numcupom.csv";
     std::string line, word;
     vector<std::string> fields;
@@ -60,23 +63,26 @@ std::string Application::getNumFiscal(){
         cupom.push_back(fields);
     }
     filein.close();
-    
-    num=stoi(cupom[0][0]);
+
+    num = stoi(cupom[0][0]);
     serie = stoi(cupom[0][1]);
-    if(num<999){
+    if (num < 999)
+    {
         num++;
-    }else{
-        num=1;
+    }
+    else
+    {
+        num = 1;
         serie++;
     }
 
     std::stringstream ss;
-    ss<<"NCF-e: "<<cupom[0][0] <<" - Série: "<<cupom[0][1];
+    ss << "NCF-e: " << cupom[0][0] << " - Série: " << cupom[0][1];
     std::stringstream aa;
     ofstream fileout;
-    fileout.open(filename,ios::trunc);
-    aa<<to_string(num)+";"+to_string(serie);
-    fileout<<aa.str();
+    fileout.open(filename, ios::trunc);
+    aa << to_string(num) + ";" + to_string(serie);
+    fileout << aa.str();
     fileout.close();
 
     return ss.str();
@@ -84,19 +90,52 @@ std::string Application::getNumFiscal(){
 
 std::string Application::criaCabecalho()
 {
+
+    std::string empresaDados[3];
+    std::string descricaoCupom = "DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETRÔNICA";
+    int aux;
+    empresaDados[0] = empresa->getNome() + " - Telefone: " + empresa->getTelefone();
+    aux = tamanho - empresaDados[0].size();
+    for (int i = 0; i < aux / 2; i++)
+    {
+        empresaDados[0] = " " + empresaDados[0] + " ";
+    }
+
+    empresaDados[1] = empresa->getEndereco();
+    aux = tamanho - empresaDados[1].size();
+    for (int i = 0; i < aux / 2; i++)
+    {
+        empresaDados[1] = " " + empresaDados[1] + " ";
+    }
+
+    empresaDados[2] = "CNPJ: " + empresa->getCnpj() + " - IE: " + empresa->getIe();
+    aux = tamanho - empresaDados[2].size();
+    for (int i = 0; i < aux / 2; i++)
+    {
+        empresaDados[2] = " " + empresaDados[2] + " ";
+    }
+
+    aux = tamanho - descricaoCupom.size();
+    for (int i = 0; i < aux / 2; i++)
+    {
+        descricaoCupom = " " + descricaoCupom + " ";
+    }
+
     std::stringstream ss;
     float valorFinal;
     float valorDescontos;
     std::string separador = "--------------------------------------------------------------------------------";
-    cout << separador << endl;
-    cout << empresa->getNome() << " - Telefone: " << empresa->getTelefone() << endl;
-    cout << empresa->getEndereco() << endl;
-    cout << "CNPJ: " << empresa->getCnpj() << " - IE: " << empresa->getIe() << endl;
-    cout << separador << endl;
-    cout << "DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETRÔNICA" << endl;
-    cout << separador << endl;
-    cout << "I. CÓDIGO        DESCRIÇÃO                          R$ UN  QTD  DESCONTO VAL(R$)" << endl;
-    cout << separador << endl;
+    ss << separador << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        ss << empresaDados[i] << endl;
+    }
+    ss << separador << endl;
+    ss << descricaoCupom << endl;
+    ss << separador << endl;
+    ss << "I. CÓDIGO        DESCRIÇÃO                          R$ UN  QTD  DESCONTO VAL(R$)" << endl;
+    ss << separador << endl;
+    //ss << this->produtos->toString();
 
     return ss.str();
 }
@@ -107,24 +146,47 @@ std::string Application::criaListaCompras()
     // int indextemp;
     //  aux = this->compras->getIdCompra(0);
     //  aux = this->compras->getQtdCompra(0);
-    //std::string aux = descontos->getCodbarras(0);
-    //std::cout<<aux<<std::endl;
-        float qtdItems;
-        float valorItems;
-        
-        float valorTotal;
-        std::string tipoDeVenda;
-        std::string desconto = "  n tem desc";
-        int desc;
-    
+    // std::string aux = descontos->getCodbarras(0);
+    // std::cout<<aux<<std::endl;
+    float qtdItems;
+    float valorItems;
+
+    float valorTotal;
+    std::string tipoDeVenda;
+    std::string desconto = "  n tem desc";
+    int desc;
+    vector<string>descontos3;
+    vector<string>fields;
+    vector<vector<string>>comprasVet;
+
     for (int j = 0; j < produtos->getSize(); j++)
     {
-        float valorDesc=0;
-        qtdItems=0;
+        for (int i = 0; i < descontos->getSize(); i++)
+        {
+            // if(produtos->getCodBarras(j)==descontos->getCodbarrasA(produtos->getCodBarras(j))){
+            //     descontos3.push_back(descontos->getCodBarrasB(produtos->getCodBarras(j)));
+            // }
+            if (produtos->getCodBarras(j) == descontos->getCodbarrasA(i) && descontos->getCodbarrasB(i) != "")
+            {
+                descontos3.push_back(descontos->getCodbarrasB(i));
+            }
+        }
+    }
+    for (int i = 0; i < descontos3.size(); i++)
+    {
+        cout << descontos3[i] << endl;
+    }
+
+    for (int j = 0; j < produtos->getSize(); j++)
+    {
+        float valorDesc = 0;
+        qtdItems = 0;
         if (produtos->getTipodeVenda(j) == "unidade")
             tipoDeVenda = "UN";
         if (produtos->getTipodeVenda(j) == "granel")
             tipoDeVenda = "KG";
+
+        
         for (int i = 0; i < compras->getSize(); i++)
         {
             if (compras->getIdCompra(i) == produtos->getCodBarras(j))
@@ -132,36 +194,56 @@ std::string Application::criaListaCompras()
                 qtdItems += compras->getQtdCompra(i);
             }
         }
-        //desconto = descontos->verificaDesconto(produtos->getCodBarras(j));
+        
         desc = descontos->verificaQualDesc(produtos->getCodBarras(j));
 
-        if(desc == 1){
+        if (desc == 1)
+        {
             valorDesc = produtos->getPreco(j) * descontos->getDescItemA(produtos->getCodBarras(j)) * qtdItems;
-            
         }
-        if(desc == 2){ 
-            int aux=0;
-            double intpart=0, floatpart=0;
-            for(int i = 0;i<compras->getSize();i++){
+        if (desc == 2)
+        {
+            int aux = 0;
+            double intpart = 0, floatpart = 0;
+            for (int i = 0; i < compras->getSize(); i++)
+            {
                 if (compras->getIdCompra(i) == produtos->getCodBarras(j))
                 {
                     aux++;
                 }
             }
-            aux = aux/4;
-            floatpart = modf(aux,&intpart);//função para separar parte inteira, da parte decimal
-            valorDesc = (produtos->getPreco(j)*intpart);
+            aux = aux / 4;
+            floatpart = modf(aux, &intpart); // função para separar parte inteira, da parte decimal
+            valorDesc = (produtos->getPreco(j) * intpart);
         }
-        if(desc == 3){
+        if (desc == 3)
+        {
 
         }
-        valorItems = (produtos->getPreco(j)*qtdItems)-valorDesc;
+        valorItems = (produtos->getPreco(j) * qtdItems) - valorDesc;
         if (qtdItems > 0)
         {
+            fields.push_back(to_string(j));                     //0
+            fields.push_back(produtos->getDescricao(j));        //1
+            fields.push_back("   ");                            
+            fields.push_back(to_string(produtos->getPreco(j))); //3
+            fields.push_back("   ");                           
+            fields.push_back(to_string(qtdItems));              //5
+            fields.push_back("   ");                            
+            fields.push_back(tipoDeVenda);                      //7
+            fields.push_back("   ");                            
+            fields.push_back(to_string(valorDesc));             //9
+            fields.push_back("   ");                            
+            fields.push_back(to_string(valorItems));            //11
+            fields.push_back("   ");                            
+            fields.push_back(to_string(desc));                  //13
+
+
+
+
             ss << produtos->getDescricao(j) << "   " << produtos->getPreco(j) << "   ";
-            ss << qtdItems << "   " << tipoDeVenda << "   "<<valorDesc<< "   "<< valorItems <<"   "<<desc<<std::endl;
+            ss << qtdItems << "   " << tipoDeVenda << "   " << valorDesc << "   " << valorItems << "   " << desc << std::endl;
         }
-        
     }
     return ss.str();
 }

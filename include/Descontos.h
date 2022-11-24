@@ -19,10 +19,12 @@ class Descontos{
 
 
     std::string getCodbarrasA(std::string id);
+    std::string getCodbarrasA(int i);
     float getDescItemA(std::string id);
     int leveX(std::string id);
     float pagueX(std::string id);
     std::string getCodBarrasB(std::string id);
+    std::string getCodbarrasB(int i);
     float getDescItemB(std::string id);
     
 };
