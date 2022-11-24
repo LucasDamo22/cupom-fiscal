@@ -12,10 +12,18 @@ class Descontos{
     Descontos(std::string filename);
     ~Descontos();
     std::string toString();
-    std::string getCodbarras(int i);
+    
     int getSize();
-    std::string verificaDesconto(std::string id);
-    bool verificaDesc(std::string id);
+    
+    int verificaQualDesc(std::string id);
+
+
+    std::string getCodbarrasA(std::string id);
+    float getDescItemA(std::string id);
+    int leveX(std::string id);
+    float pagueX(std::string id);
+    std::string getCodBarrasB(std::string id);
+    float getDescItemB(std::string id);
     
 };
 
